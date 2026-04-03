@@ -182,22 +182,3 @@ It demonstrates that:
 * Trust can be replaced with verifiable logic
 * Game theory + cryptography unlock new digital experiences
 
----
-
-## 📜 License
-
-Released under the MIT License.
-
----
-
-## 🙌 Acknowledgments
-
-Inspired by experimental social deduction games and built with support from the Aleo ecosystem and privacy-first tooling pioneers.
-
----
-
-If you want, I can tighten this further into:
-
-* a **one-pager for investors**
-* a **landing page version**
-* or a **whitepaper-style doc (more technical, more alpha)**
