@@ -1,168 +1,203 @@
+# 🧠 MindTrace
 
+## Introduction
 
-## Who's Your Guy? - Aleo Blockchain Edition
-Introduction
-Welcome to "Who's Your Guy?" - an innovative social guessing game deployed using the Aleo Blockchain. Inspired by the puzzle gaming platform's "wheres_alex?", this game combines the excitement of social interactions with the security and transparency of blockchain technology. This README file provides essential information on the game, guiding you through the installation process and offering an overview of the game's features.
+Welcome to **MindTrace** — a strategic social deduction game built on the Aleo blockchain. At its core, MindTrace blends psychological gameplay with privacy-first infrastructure, creating a competitive environment where players conceal identities, challenge assumptions, and outthink their opponents.
 
-Your guy's name is hidden onchain from the other party, and the entire game is hidden from everyone on chain so you can bet as much as you want without judgement :)
+Unlike traditional guessing games, MindTrace operates entirely within a private on-chain context. Every move, stake, and outcome is shielded, giving players the freedom to engage at any level without external visibility or bias.
 
-Built with Puzzle Wallet & Puzzle SDK -- uses programmable private multisigs under the hood!
- 
-### Puzzle SDK Docs: [link](https://docs.puzzle.online/guides/getting_started/)
-### Puzzle Devtools Site: [link](https://dev.puzzle.online/)
+This guide walks you through the core concepts, setup, and architecture behind the game.
 
-### Puzzle Wallet Google Chrome Download [link](https://chromewebstore.google.com/detail/puzzle-wallet/fdchdcpieegfofnofhgdombfckhbcokj)
-### Puzzle Wallet iOS Download [link](https://testflight.apple.com/join/bikon7Nj)
+---
 
+## ⚡ Core Concept
 
-# About Who's your guy?
-Who is your guy? is a fun experiment that aims to be a fun 1v1 game to showcase how to have a completely private multiparty game on Aleo! This technical overview reviews the issues with multiparty privacy and how this is solved using programmable private multisigs and incentives!
+In MindTrace, one player encodes a hidden identity within a private on-chain state. The opposing player must trace that identity through logic, intuition, and strategy.
 
-<br /> 
+* If the challenger deciphers the identity → they claim the reward pool
+* If they fail → the creator secures the winnings
 
-## What is the " Who Is Your Guy? Game" 
-"Who Is Your Guy?" brings a fresh approach to social gaming. Picture this: hide a mystery person in a secret location within the Aleo Blockchain and challenge your friends to guess who it is. If they guess right, the prize pot is theirs; if not, you win the rewards. This game is not just about guessing; it's about strategy, deduction, and the unpredictable fun that comes with it.
- <br />
+This isn’t just a guessing game — it’s a battle of inference, risk, and timing.
 
-## So what's the point of the game?
-Have fun with other members of the Aleo community, rack up some wins and rack up some puzzle pieces! 
+---
 
-## How does the game work?
-The FE for the game utilizes key multisig features using the Puzzle Wallet and Puzzle SDK described below. <br /> <br />
-The game is split into 3 Leo Programs described below:
-1. my_puzzle_pieces token program (with _n_ of _n_ programmable multisig functions)
-2. Multiparty PVP utils program
-3. Who's your guy program
+## 🔐 Built on Privacy
 
-<br /> 
+MindTrace leverages **Puzzle Wallet** and the **Puzzle SDK**, utilizing programmable private multisignature systems to enable:
 
-2. Accepting a new game (opponent)
-- mint puzzle pieces if you don't have already
-- match wager from the challenger
-- accept the game and lock in the wagers to win if you guess correct!
+* Fully hidden game states
+* Private wagers between players
+* Secure, verifiable interactions without exposing sensitive data
 
-<br /> 
+**Resources:**
 
-3. Finishing a game (challenger)
-- Reveal your answer
-- Finish the game and payout the wagers to you if the opponent guessed wrong or the opponent if they guessed right!
+* Puzzle SDK Docs: link
+* Puzzle Devtools: link
+* Puzzle Wallet (Chrome): link
+* Puzzle Wallet (iOS): link
 
+---
 
-# How Who's your guy showcases how to solve issues in multiparty privacy
+## 🎮 What is MindTrace?
 
-## Defining Multiparty Privacy
-Multiparty privacy is a broad category and can be split into multiple categories based on use cases like:
-1. n:1
-2. 1:1:1
-3. n:n
+MindTrace is a 1v1 private strategy game designed to demonstrate how truly confidential multiplayer interactions can exist on-chain.
 
-### n:1 multiparty privacy
-One category of multiparty privacy is n:1 like a company's bank account
+Each match creates a shared yet selectively private environment:
 
-<br /> 
+* The game exists between players only
+* Critical information remains hidden even from opponents
+* Outcomes are enforced transparently without revealing underlying data
 
-A company's bank account is multiparty and private -- _n_ people have ability to view/share an account, everyone outside of those _n_ people can't see the account balance, and it requires _t_ approvals to do an action on one account.
+---
 
-### 1:1:1 multiparty privacy
-Another category of multiparty privacy is 1:1:1 is like a game like Guess Who?
+## 🎯 Purpose of the Game
 
-<br /> 
+* Compete with others in the Aleo ecosystem
+* Test your reasoning and deception skills
+* Earn rewards through successful deduction
+* Explore the future of private on-chain gaming
 
-The users share a single game state that is multiparty while pieces of that shared game state are private to each individual. 
+---
 
-Each player in the game has state that is private to themselves but needs to interactive with another player. The game state and individual private values may/may not be private to others outside of the two players, but each player wants to keep certain information private from the other. 
+## ⚙️ How the Game Works
 
-<p align="center">
-  <img width="800" alt="image" src="https://github.com/puzzlehq/serengeti/assets/39972641/cf60c961-a96f-4814-8a6c-d1d9573c1f16">
-</p>
+### System Architecture
 
-<br />
+MindTrace operates across three core Leo programs:
 
-## The main issues with multiparty privacy
-Multiparty privacy suffers from 3 problems
-1. Guarantees on privacy of data
-2. Guarantees on routing of information between parties
-3. Multiparty computation attacks: timeout, collusion, and denial of service
+* **TraceToken Program**
+  Handles in-game assets and programmable multisig logic
 
-<br />
+* **PVP Utilities Program**
+  Manages shared state and player interactions
 
-We can understand these problems specifically by looking at a game of online poker in web2.
-<p align="center">
-  <img width="800" height="400" alt="image" src="https://github.com/puzzlehq/serengeti/assets/39972641/01ceabd7-abb1-41bb-ba2f-773e3b6be0d5">
-</p>
+* **MindTrace Core Program**
+  Governs gameplay logic, identity encoding, and resolution
 
-<br />
+---
 
-**1. Guarantees on privacy of data** <br />
-The terms of service, the auditing by government, and the enforcement of law by the company's operating jurisdiction is the only guarantee you get that your hand is private to other players as well as the dealer. If you don't know or trust the brand/company, it's likely you won't feel the game is fair. 
+### 🟢 Starting a Match
 
-The most common complaint of online poker is that the game is rigged because other players or the house can see your cards somehow to know to increase wager or fold.
-<br />
+* Acquire Trace tokens (if needed)
+* Accept or initiate a challenge
+* Match the stake set by your opponent
+* Lock funds into a private multisig state
 
-**2. Guarantees on routing of information between parties** <br />
-The terms of service, the auditing by government, and the enforcement of law by the company's operating jurisdiction is the only guarantee you get that your actions to up a bet, match wager, or fold is actually carried out. Again, if you don't know or trust the brand/company, it's likely you won't feel the game is fair. 
+---
 
-Another common complaint of online poker is that the game lags or fails to record your action and folds your hand or matches your wager when you didn't want it to.
-<br />
+### 🔴 Resolving a Match
 
-**3. Multiparty computation attacks: timeout and denial of service** <br />
-These attacks currently have no mitigation
-- if the online poker site shuts down, then you have no mitigation
-- if the opponent rage quits, then you have no mitigation
-- if players collude, you have no mitigation or recourse
+* The challenger submits their final guess
+* The creator reveals the hidden identity
+* Smart contract logic determines the winner
+* Rewards are distributed automatically
 
-These are the last most common complaints of an online poker game -- opponents will rage quit or the online poker service may fail/shut down mid game.
+---
 
-<br />
+## 🧩 Understanding Multiparty Privacy
 
-## How Where's Alex solves the issues with multiparty privacy
+MindTrace explores a critical concept in blockchain design: **multiparty privacy**.
 
-<br />
+### What is Multiparty Privacy?
 
-**1. Guarantees on privacy of data** <br />
-In private/public ZKP blockchains like Aleo, your data is guaranteed to be private to other players in the game as long as they don't have your private keys and that the smart contract/program functions don't reveal your data to others.
+It refers to systems where multiple participants interact within a shared state while maintaining control over what information is visible to others.
 
-This alleviates the concern that the game is rigged because you have guarantees your information is hidden from other players/house and you can verify yourself onchain.
+Common structures include:
 
-<br />
+* **n:1 systems** (e.g., shared accounts)
+* **1:1 interactive systems** (e.g., competitive games)
+* **n:n collaborative systems**
 
-**2. Guarantees on routing of information between parties** <br />
-Puzzle's SDK has operations to CreateSharedState and ImportSharedState that work with Puzzle Wallet to create multisig keys and import multisig keys for generating a place to send information to parties in a game.
-In private/public ZKP blockchains like Aleo, your information is recorded onchain and guaranteed to be available to anyone that runs or communicates with a node.
-Additionally, Puzzle wallet makes it easy for you to find your game state that's recorded on chain.
+MindTrace primarily operates in a **1:1 interactive privacy model**, where:
 
-<br />
+* Both players share a game session
+* Each holds private information critical to gameplay
+* Neither party fully trusts the other — yet the system enforces fairness
 
-This alleviates the concern that your actions will be carried out and reach the other parties -- you can verify that it has been processed on chain.
+---
 
-<br />
+## ⚠️ Key Challenges in Multiparty Systems
 
-**3. Multiparty computation attacks: timeout and denial of service** <br />
-The secret sauce of Where's Alex is solving the rage-quit, colllusion and denial of service problem with incentive engineering and game design.
+### 1. Data Privacy Guarantees
 
-<br />
+In traditional systems, players rely on trust in a platform. MindTrace removes this dependency by ensuring all sensitive data remains cryptographically private.
 
-This is done by forcing a challenger to commit a wager to a 2/2 multisig between the challenger & opponent when proposing a game.
-Once the opponent accepts the game and submits their guess -- the challenger's wager is locked and will be lost if the challenger rage quits or never reveals the answer.
-Importantly -- thanks to programmability of the multisig -- there are exit routes the challenger can take to retrieve their funds from the multisig if the opponent rejects or never responds so it's not stuck at the beginning as well.
-Because the game is a simple 1v1 -- we also don't have to worry about the collusion risk as well.
+---
 
-<br />
+### 2. Reliable Information Flow
 
-# How Where's Alex works
+Actions between players must be verifiable and correctly executed. By operating on Aleo, every interaction is recorded and provable without exposing content.
 
-<br />
+---
 
-Below we'll walk through the following:
-1. How the Where's Alex? game works at a high level with Leo programs, Puzzle Wallet, and Puzzle SDK
-2. How the Where's Alex? Leo programs work in depth
+### 3. Adversarial Behavior
 
-License
-This game is released under the MIT License.
+Common issues include:
 
-Acknowledgments
-Special thanks to the puzzle gaming platform for inspiring this project and to the Aleo Blockchain community for their support
+* Rage quitting
+* Collusion
+* Denial of service
 
-# Walking through the Who is your guy Leo programs
+These problems are typically unsolved in Web2 environments.
 
-Repo [here](https://github.com/Enniwealth/who-is-your-guy/tree/main)
+---
+
+## 🛠️ How MindTrace Solves These Problems
+
+### 🔒 Privacy by Design
+
+Using zero-knowledge architecture, all sensitive inputs remain hidden unless intentionally revealed.
+
+---
+
+### 🔁 Verifiable Interaction Routing
+
+Shared state is created and managed through programmable multisigs, ensuring:
+
+* Actions are recorded
+* Outcomes are enforceable
+* No central authority is required
+
+---
+
+### 🎯 Incentive Engineering
+
+MindTrace introduces economic constraints to prevent abuse:
+
+* The challenger must lock funds before gameplay begins
+* Failure to complete the game results in penalties
+* Smart exit paths exist to avoid locked funds in inactive matches
+
+This structure discourages bad behavior while maintaining fairness.
+
+---
+
+## 🧠 Why MindTrace Matters
+
+MindTrace isn’t just a game — it’s a proof of concept for the future of private, trustless multiplayer systems.
+
+It demonstrates that:
+
+* Competitive interactions can remain fully private
+* Trust can be replaced with verifiable logic
+* Game theory + cryptography unlock new digital experiences
+
+---
+
+## 📜 License
+
+Released under the MIT License.
+
+---
+
+## 🙌 Acknowledgments
+
+Inspired by experimental social deduction games and built with support from the Aleo ecosystem and privacy-first tooling pioneers.
+
+---
+
+If you want, I can tighten this further into:
+
+* a **one-pager for investors**
+* a **landing page version**
+* or a **whitepaper-style doc (more technical, more alpha)**
